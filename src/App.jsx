@@ -1,4 +1,19 @@
 import { useState, useEffect, useRef } from "react";
+import { initializeApp } from "firebase/app";
+import { getDatabase, ref, set, onValue, get } from "firebase/database";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCOeii2jYWPhUTACPEFsqQClXc-iQBQSLo",
+  authDomain: "cineforesta-34e77.firebaseapp.com",
+  databaseURL: "https://cineforesta-34e77-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "cineforesta-34e77",
+  storageBucket: "cineforesta-34e77.firebasestorage.app",
+  messagingSenderId: "555430963680",
+  appId: "1:555430963680:web:6d40794808625c64de2385"
+};
+
+const firebaseApp = initializeApp(firebaseConfig);
+const db = getDatabase(firebaseApp);
 
 const TMDB_KEY = "86c3283ad5a8c5b4f86ec7015813ccdc";
 const TMDB_BASE = "https://api.themoviedb.org/3";
@@ -28,6 +43,7 @@ const STYLE = `
   .landing-box-title{font-family:'Playfair Display',serif;font-size:1rem;color:var(--forest);}
   .create-btn{background:var(--forest);color:var(--beige);border:none;border-radius:32px;padding:13px 28px;font-family:'Lato',sans-serif;font-size:.9rem;font-weight:700;letter-spacing:.06em;cursor:pointer;transition:background .2s,transform .15s;width:100%;}
   .create-btn:hover{background:var(--forest-mid);transform:translateY(-1px);}
+  .create-btn:disabled{opacity:.6;cursor:not-allowed;transform:none;}
   .divider{display:flex;align-items:center;gap:10px;color:var(--text-light);font-size:.76rem;}
   .divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--beige-dark);}
   .join-row{display:flex;gap:8px;}
@@ -106,11 +122,20 @@ function lsGet(key) {
 function lsSet(key, val) {
   try { localStorage.setItem(key, JSON.stringify(val)); } catch {}
 }
-function loadList(code) { return lsGet("cf_" + code); }
-function saveList(code, films) { lsSet("cf_" + code, films); }
+
 function genCode() {
   const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
   return Array.from({length:6}, ()=>chars[Math.floor(Math.random()*chars.length)]).join("");
+}
+
+async function saveList(code, films) {
+  await set(ref(db, "lists/" + code), films);
+}
+
+async function loadList(code) {
+  const snap = await get(ref(db, "lists/" + code));
+  if (snap.exists()) return snap.val();
+  return null;
 }
 
 async function searchFilms(query) {
@@ -125,9 +150,7 @@ async function searchFilms(query) {
       year: m.release_date ? m.release_date.slice(0,4) : "—",
       poster: m.poster_path ? `${TMDB_IMG}${m.poster_path}` : null,
     }));
-  } catch(e) {
-    return [];
-  }
+  } catch { return []; }
 }
 
 export default function App() {
@@ -135,6 +158,7 @@ export default function App() {
   const [roomCode, setRoomCode] = useState("");
   const [joinVal, setJoinVal] = useState("");
   const [joinErr, setJoinErr] = useState("");
+  const [creating, setCreating] = useState(false);
   const [films, setFilms] = useState([]);
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
@@ -144,6 +168,7 @@ export default function App() {
   const [toastKey, setToastKey] = useState(0);
   const searchRef = useRef(null);
   const toastTimer = useRef(null);
+  const unsubRef = useRef(null);
 
   const showToast = (msg) => {
     setToast(msg); setToastKey(k=>k+1);
@@ -151,12 +176,10 @@ export default function App() {
     toastTimer.current = setTimeout(()=>setToast(null), 2400);
   };
 
+  // Ripristina ultima stanza
   useEffect(()=>{
     const last = lsGet("cf_last");
-    if (last) {
-      const saved = loadList(last);
-      if (saved !== null) { setFilms(saved); setRoomCode(last); setScreen("app"); }
-    }
+    if (last) enterRoom(last, false, true);
   }, []);
 
   useEffect(()=>{
@@ -165,38 +188,67 @@ export default function App() {
     return ()=>document.removeEventListener("mousedown", h);
   },[]);
 
-  const enterRoom = (code, isNew) => {
-    if (isNew) { saveList(code, []); setFilms([]); }
-    else {
-      const saved = loadList(code);
-      if (saved === null) { setJoinErr("Codice non trovato."); return false; }
-      setFilms(saved);
+  const startListening = (code) => {
+    if (unsubRef.current) unsubRef.current();
+    const listRef = ref(db, "lists/" + code);
+    unsubRef.current = onValue(listRef, (snap) => {
+      if (snap.exists()) setFilms(snap.val());
+      else setFilms([]);
+    });
+  };
+
+  const enterRoom = async (code, isNew, silent=false) => {
+    if (isNew) {
+      await saveList(code, []);
+    } else {
+      const existing = await loadList(code);
+      if (existing === null) {
+        if (!silent) setJoinErr("Codice non trovato.");
+        return false;
+      }
     }
-    setRoomCode(code); lsSet("cf_last", code); setScreen("app");
+    setRoomCode(code);
+    lsSet("cf_last", code);
+    startListening(code);
+    setScreen("app");
     return true;
   };
 
-  const handleCreate = () => { const code = genCode(); enterRoom(code, true); showToast("Lista creata! 🌿"); };
-  const handleJoin = () => {
+  const handleCreate = async () => {
+    setCreating(true);
+    const code = genCode();
+    await enterRoom(code, true);
+    showToast("Lista creata! 🌿");
+    setCreating(false);
+  };
+
+  const handleJoin = async () => {
     const c = joinVal.trim().toUpperCase();
     if (c.length < 4) { setJoinErr("Codice non valido."); return; }
     setJoinErr("");
-    if (enterRoom(c, false)) showToast("Entrato! 🌿");
+    const ok = await enterRoom(c, false);
+    if (ok) showToast("Entrato! 🌿");
   };
 
-  const updateFilms = (next) => { setFilms(next); saveList(roomCode, next); };
+  const updateFilms = async (next) => {
+    setFilms(next);
+    await saveList(roomCode, next);
+  };
+
   const handleSearch = async () => {
     if (!query.trim()) return;
     setSearching(true); setShowResults(true); setResults([]);
     const r = await searchFilms(query.trim());
     setResults(r); setSearching(false);
   };
-  const addFilm = (film) => {
+
+  const addFilm = async (film) => {
     if (films.find(f=>f.id===film.id)) { showToast("Già in lista!"); return; }
-    updateFilms([{...film, watched:false, addedAt:Date.now()}, ...films]);
+    await updateFilms([{...film, watched:false, addedAt:Date.now()}, ...films]);
     setQuery(""); setResults([]); setShowResults(false);
     showToast(`"${film.title}" aggiunto ✓`);
   };
+
   const toggleWatched = (id) => updateFilms(films.map(f=>f.id===id?{...f,watched:!f.watched}:f));
   const removeFilm = (id) => updateFilms(films.filter(f=>f.id!==id));
   const copyCode = () => { navigator.clipboard?.writeText(roomCode).catch(()=>{}); showToast(`Codice copiato: ${roomCode} 📋`); };
@@ -214,7 +266,9 @@ export default function App() {
           <p className="landing-sub">Crea una lista, condividi il codice con un amico, e decidete cosa vedere stasera.</p>
           <div className="landing-box">
             <div className="landing-box-title">Inizia</div>
-            <button className="create-btn" onClick={handleCreate}>🎬 Crea nuova lista</button>
+            <button className="create-btn" onClick={handleCreate} disabled={creating}>
+              {creating ? <span className="loading-dots"><span/><span/><span/></span> : "🎬 Crea nuova lista"}
+            </button>
             <div className="divider">oppure entra con un codice</div>
             <div className="join-row">
               <input className="join-input" placeholder="CODICE" value={joinVal}
@@ -246,7 +300,7 @@ export default function App() {
 
         <div className="sync-info">
           <span className="sync-dot"/>
-          Lista salvata sul browser · codice:&nbsp;<strong style={{color:"var(--forest)"}}>{roomCode}</strong>
+          Sincronizzata in tempo reale · codice:&nbsp;<strong style={{color:"var(--forest)"}}>{roomCode}</strong>
         </div>
 
         <div ref={searchRef}>
@@ -316,4 +370,4 @@ function Card({film, index, onToggle, onRemove}) {
       </div>
     </div>
   );
-      }
+}
