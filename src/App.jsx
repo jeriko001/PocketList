@@ -401,7 +401,7 @@ export default function App() {
   const isMusic = activeTab === "musica";
 
   const tabIcon = { film:"🎬", serie:"📺", musica:"🎵" };
-  const watchedLabel = { film:"Film visti", serie:"Visti", musica:"Ascoltati" };
+  const watchedLabel = { film:"Film visti", serie:"Viste", musica:"Condivisa" };
   const toWatchLabel = { film:"Da vedere", serie:"Da vedere", musica:"Da ascoltare" };
   const searchPlaceholder = { film:"Cerca un film…", serie:"Cerca una serie o anime…", musica:"Cerca artista o album…" };
 
@@ -411,7 +411,7 @@ export default function App() {
       <div className="app">
         <div className="landing">
           <div className="landing-logo">🌿</div>
-          <div className="landing-title">CineForesta<span>watchlist condivisa</span></div>
+          <div className="landing-title">PocketList<span>lista condivisa</span></div>
           <p className="landing-sub">Crea una lista, condividi il codice con un amico, e decidete cosa vedere stasera.</p>
           <div className="landing-box">
             <div className="landing-box-title">Crea nuova lista</div>
@@ -459,7 +459,7 @@ export default function App() {
       <div className="app">
         <header>
           <span className="header-leaf" onClick={goHome}>🌿</span>
-          <div className="header-title">{roomName||"CineForesta"}<span>watchlist condivisa</span></div>
+          <div className="header-title">{roomName||"PocketList"}<span>lista condivisa</span></div>
           <div className="header-right">
             <div className="notes-btn" onClick={()=>setShowNotes(true)} title="Note">📝</div>
             <div className="share-pill" onClick={copyCode}>
