@@ -34,7 +34,6 @@ const STYLE = `
   .app{min-height:100vh;width:100%;max-width:100vw;overflow-x:hidden;background:var(--beige);
     background-image:radial-gradient(ellipse at 10% 0%,rgba(90,138,53,0.08) 0%,transparent 60%),radial-gradient(ellipse at 90% 100%,rgba(45,80,22,0.07) 0%,transparent 60%);}
 
-  /* LANDING */
   .landing{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;padding:40px 20px;width:100%;}
   .landing-logo{font-size:2.8rem;}
   .landing-title{font-family:'Playfair Display',serif;font-size:2.3rem;color:var(--forest);text-align:center;line-height:1.1;}
@@ -65,7 +64,6 @@ const STYLE = `
   .recent-code{font-size:.72rem;color:var(--text-light);font-family:monospace;letter-spacing:.1em;margin-top:2px;}
   .recent-del{margin-left:auto;background:none;border:none;color:var(--text-light);cursor:pointer;font-size:1rem;padding:4px;flex-shrink:0;}
 
-  /* HEADER */
   header{background:var(--forest);padding:17px 18px 13px;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:100;box-shadow:0 2px 18px rgba(45,80,22,.18);width:100%;}
   .header-leaf{font-size:1.3rem;flex-shrink:0;cursor:pointer;}
   .header-title{font-family:'Playfair Display',serif;font-size:1.45rem;color:var(--beige);letter-spacing:.03em;line-height:1;min-width:0;flex:1;}
@@ -78,10 +76,26 @@ const STYLE = `
   .share-pill-label{color:var(--beige);font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;}
   .share-code{color:var(--beige-dark);font-size:.83rem;font-family:monospace;letter-spacing:.16em;font-weight:700;}
 
+  /* SUGGERIMENTO POPUP */
+  .suggest-overlay{position:fixed;inset:0;background:rgba(30,47,16,0.45);z-index:200;display:flex;align-items:center;justify-content:center;padding:20px;animation:fadeIn .2s ease;}
+  .suggest-popup{background:var(--beige);border-radius:22px;box-shadow:0 8px 40px rgba(45,80,22,0.22);width:100%;max-width:320px;overflow:hidden;animation:popIn .25s ease;}
+  @keyframes popIn{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}
+  .suggest-header{background:var(--forest);padding:16px 18px;display:flex;align-items:center;justify-content:space-between;}
+  .suggest-header-title{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--beige);font-weight:600;}
+  .suggest-close{background:none;border:none;color:var(--beige-dark);font-size:1.3rem;cursor:pointer;padding:4px;}
+  .suggest-body{padding:20px;display:flex;flex-direction:column;align-items:center;gap:14px;}
+  .suggest-poster{width:120px;height:180px;object-fit:cover;border-radius:10px;box-shadow:var(--shadow);}
+  .suggest-poster-ph{width:120px;height:180px;background:linear-gradient(135deg,var(--beige-dark),var(--beige-mid));border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:3rem;}
+  .suggest-type{font-size:.72rem;color:var(--text-light);font-weight:700;letter-spacing:.08em;text-transform:uppercase;}
+  .suggest-title{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--text-dark);font-weight:600;text-align:center;line-height:1.3;}
+  .suggest-year{font-size:.8rem;color:var(--text-light);}
+  .suggest-again{background:var(--forest);color:var(--beige);border:none;border-radius:32px;padding:10px 24px;font-family:'Lato',sans-serif;font-size:.85rem;font-weight:700;cursor:pointer;transition:background .2s;}
+  .suggest-again:hover{background:var(--forest-mid);}
+  .suggest-empty{font-family:'Playfair Display',serif;font-style:italic;color:var(--text-light);font-size:.95rem;text-align:center;padding:8px 0;}
+
   /* NOTES POPUP */
   .notes-overlay{position:fixed;inset:0;background:rgba(30,47,16,0.45);z-index:200;display:flex;align-items:center;justify-content:center;padding:20px;animation:fadeIn .2s ease;}
   .notes-popup{background:var(--beige);border-radius:22px;box-shadow:0 8px 40px rgba(45,80,22,0.22);width:100%;max-width:420px;max-height:80vh;display:flex;flex-direction:column;overflow:hidden;animation:popIn .25s ease;}
-  @keyframes popIn{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}
   .notes-header{background:var(--forest);padding:16px 18px;display:flex;align-items:center;justify-content:space-between;}
   .notes-header-title{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--beige);font-weight:600;}
   .notes-close{background:none;border:none;color:var(--beige-dark);font-size:1.3rem;cursor:pointer;padding:4px;}
@@ -99,7 +113,6 @@ const STYLE = `
   .notes-save-btn{background:var(--forest);color:var(--beige);border:none;border-radius:32px;padding:9px 22px;font-family:'Lato',sans-serif;font-size:.82rem;font-weight:700;cursor:pointer;transition:background .2s;}
   .notes-save-btn:hover{background:var(--forest-mid);}
 
-  /* TABS */
   .tabs{display:flex;gap:8px;padding:14px 16px 0;overflow-x:auto;}
   .tab{background:transparent;border:2px solid var(--beige-dark);border-radius:32px;padding:7px 14px;font-family:'Lato',sans-serif;font-size:.82rem;font-weight:700;color:var(--text-light);cursor:pointer;transition:all .2s;white-space:nowrap;flex-shrink:0;}
   .tab.active{background:var(--forest);border-color:var(--forest);color:var(--beige);}
@@ -109,7 +122,6 @@ const STYLE = `
   .sync-dot{width:6px;height:6px;border-radius:50%;background:var(--forest-light);animation:pulse 2.5s infinite;flex-shrink:0;}
   @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
 
-  /* SEARCH */
   .search-wrap{padding:14px 16px 0;max-width:500px;}
   .search-row{display:flex;gap:8px;}
   .search-input{flex:1;background:white;border:2px solid var(--beige-dark);border-radius:32px;padding:11px 17px;font-family:'Lato',sans-serif;font-size:.9rem;color:var(--text-dark);outline:none;transition:border-color .2s,box-shadow .2s;min-width:0;}
@@ -129,13 +141,11 @@ const STYLE = `
   .result-year{font-size:.72rem;color:var(--text-light);margin-top:2px;}
   .no-results{padding:11px 13px;color:var(--text-light);font-style:italic;font-size:.84rem;}
 
-  /* GRID */
   .section-label{font-family:'Playfair Display',serif;font-size:1.18rem;color:var(--forest);padding:22px 16px 11px;display:flex;align-items:center;gap:9px;font-weight:600;}
   .section-label::after{content:'';flex:1;height:1.5px;background:linear-gradient(90deg,var(--forest-faint),transparent);margin-left:6px;}
   .count-badge{background:var(--forest-faint);color:var(--forest-mid);border:1px solid rgba(45,80,22,.15);font-family:'Lato',sans-serif;font-size:.69rem;font-weight:700;padding:2px 8px;border-radius:12px;letter-spacing:.05em;flex-shrink:0;}
   .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(138px,1fr));gap:15px;padding:0 16px 10px;}
   .grid-sq{display:grid;grid-template-columns:repeat(auto-fill,minmax(138px,1fr));gap:15px;padding:0 16px 10px;}
-
   .card{position:relative;border-radius:12px;overflow:hidden;background:white;box-shadow:var(--shadow);transition:transform .22s,box-shadow .22s;animation:cardIn .35s ease both;}
   .card:hover{transform:translateY(-5px) scale(1.02);box-shadow:var(--shadow-hover);}
   .card.watched{opacity:.62;filter:saturate(.45);}
@@ -167,245 +177,190 @@ const STYLE = `
   @keyframes dot{0%,80%,100%{opacity:.25;transform:scale(.8)}40%{opacity:1;transform:scale(1)}}
 `;
 
-function lsGet(key) {
-  try { const v = localStorage.getItem(key); return v ? JSON.parse(v) : null; } catch { return null; }
-}
-function lsSet(key, val) {
-  try { localStorage.setItem(key, JSON.stringify(val)); } catch {}
-}
-function genCode() {
-  const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
-  return Array.from({length:6}, ()=>chars[Math.floor(Math.random()*chars.length)]).join("");
-}
+function lsGet(key) { try{const v=localStorage.getItem(key);return v?JSON.parse(v):null;}catch{return null;} }
+function lsSet(key,val) { try{localStorage.setItem(key,JSON.stringify(val));}catch{} }
+function genCode() { const c="ABCDEFGHJKLMNPQRSTUVWXYZ23456789";return Array.from({length:6},()=>c[Math.floor(Math.random()*c.length)]).join(""); }
 
-async function saveList(code, data) {
-  await set(ref(db, "lists/" + code), data);
-}
-async function loadList(code) {
-  const snap = await get(ref(db, "lists/" + code));
-  return snap.exists() ? snap.val() : null;
-}
+async function saveList(code,data){await set(ref(db,"lists/"+code),data);}
+async function loadList(code){const snap=await get(ref(db,"lists/"+code));return snap.exists()?snap.val():null;}
 
-// MusicBrainz search
-async function searchMusic(query) {
-  try {
-    const url = `https://musicbrainz.org/ws/2/release/?query=${encodeURIComponent(query)}&fmt=json&limit=12`;
-    const res = await fetch(url, { headers: { "User-Agent": "CineForesta/1.0 (personal app)" } });
-    const data = await res.json();
-    const releases = data.releases || [];
-    const results = await Promise.all(releases.slice(0,12).map(async (r) => {
-      const mbid = r.id;
-      const coverUrl = `https://coverartarchive.org/release/${mbid}/front-250`;
-      return {
-        id: mbid,
-        title: r.title,
-        original_title: r["artist-credit"]?.[0]?.artist?.name || "",
-        year: r.date ? r.date.slice(0,4) : "—",
-        poster: coverUrl,
-        isCover: true,
-      };
+async function searchMusic(query){
+  try{
+    const url=`https://musicbrainz.org/ws/2/release/?query=${encodeURIComponent(query)}&fmt=json&limit=12`;
+    const res=await fetch(url,{headers:{"User-Agent":"CineForesta/1.0 (personal app)"}});
+    const data=await res.json();
+    return (data.releases||[]).slice(0,12).map(r=>({
+      id:r.id,title:r.title,
+      original_title:r["artist-credit"]?.[0]?.artist?.name||"",
+      year:r.date?r.date.slice(0,4):"—",
+      poster:`https://coverartarchive.org/release/${r.id}/front-250`,
+      isCover:true,
     }));
-    return results;
-  } catch { return []; }
+  }catch{return[];}
 }
 
-async function searchFilms(query, type) {
-  try {
-    const endpoint = type === "film" ? "movie" : "tv";
-    const url = `${TMDB_BASE}/search/${endpoint}?api_key=${TMDB_KEY}&query=${encodeURIComponent(query)}&language=it-IT&page=1`;
-    const res = await fetch(url);
-    const data = await res.json();
+async function searchFilms(query,type){
+  try{
+    const endpoint=type==="film"?"movie":"tv";
+    const url=`${TMDB_BASE}/search/${endpoint}?api_key=${TMDB_KEY}&query=${encodeURIComponent(query)}&language=it-IT&page=1`;
+    const res=await fetch(url);const data=await res.json();
     return (data.results||[]).slice(0,12).map(m=>({
-      id: m.id,
-      title: m.title || m.name,
-      original_title: m.original_title || m.original_name,
-      year: (m.release_date || m.first_air_date || "").slice(0,4) || "—",
-      poster: m.poster_path ? `${TMDB_IMG}${m.poster_path}` : null,
+      id:m.id,title:m.title||m.name,
+      original_title:m.original_title||m.original_name,
+      year:(m.release_date||m.first_air_date||"").slice(0,4)||"—",
+      poster:m.poster_path?`${TMDB_IMG}${m.poster_path}`:null,
     }));
-  } catch { return []; }
+  }catch{return[];}
 }
 
-function getRecents() { return lsGet("cf_recents") || []; }
-function saveRecents(list) { lsSet("cf_recents", list); }
-function addRecent(code, name) {
-  const recents = getRecents().filter(r => r.code !== code);
-  recents.unshift({ code, name });
-  saveRecents(recents.slice(0, 5));
-}
-function removeRecent(code) { saveRecents(getRecents().filter(r => r.code !== code)); }
+function getRecents(){return lsGet("cf_recents")||[];}
+function saveRecents(list){lsSet("cf_recents",list);}
+function addRecent(code,name){const r=getRecents().filter(x=>x.code!==code);r.unshift({code,name});saveRecents(r.slice(0,5));}
+function removeRecent(code){saveRecents(getRecents().filter(r=>r.code!==code));}
 
-const DEFAULT_NOTES = {
-  tabs: ["Note", "Luoghi", "Link"],
-  contents: ["", "", ""]
-};
+const DEFAULT_NOTES={tabs:["Note","Luoghi","Link"],contents:["","",""]};
 
-export default function App() {
-  const [screen, setScreen] = useState("landing");
-  const [roomCode, setRoomCode] = useState("");
-  const [roomName, setRoomName] = useState("");
-  const [newName, setNewName] = useState("");
-  const [joinVal, setJoinVal] = useState("");
-  const [joinErr, setJoinErr] = useState("");
-  const [creating, setCreating] = useState(false);
-  const [activeTab, setActiveTab] = useState("film");
-  const [listData, setListData] = useState({ film: [], serie: [], musica: [], notes: DEFAULT_NOTES, name: "" });
-  const [query, setQuery] = useState("");
-  const [results, setResults] = useState([]);
-  const [searching, setSearching] = useState(false);
-  const [showResults, setShowResults] = useState(false);
-  const [recents, setRecents] = useState(getRecents());
-  const [showNotes, setShowNotes] = useState(false);
-  const [notesTab, setNotesTab] = useState(0);
-  const [localNotes, setLocalNotes] = useState(DEFAULT_NOTES);
-  const [toast, setToast] = useState(null);
-  const [toastKey, setToastKey] = useState(0);
-  const searchRef = useRef(null);
-  const toastTimer = useRef(null);
-  const unsubRef = useRef(null);
+export default function App(){
+  const[screen,setScreen]=useState("landing");
+  const[roomCode,setRoomCode]=useState("");
+  const[roomName,setRoomName]=useState("");
+  const[newName,setNewName]=useState("");
+  const[joinVal,setJoinVal]=useState("");
+  const[joinErr,setJoinErr]=useState("");
+  const[creating,setCreating]=useState(false);
+  const[activeTab,setActiveTab]=useState("film");
+  const[listData,setListData]=useState({film:[],serie:[],musica:[],notes:DEFAULT_NOTES,name:""});
+  const[query,setQuery]=useState("");
+  const[results,setResults]=useState([]);
+  const[searching,setSearching]=useState(false);
+  const[showResults,setShowResults]=useState(false);
+  const[recents,setRecents]=useState(getRecents());
+  const[showNotes,setShowNotes]=useState(false);
+  const[notesTab,setNotesTab]=useState(0);
+  const[localNotes,setLocalNotes]=useState(DEFAULT_NOTES);
+  const[showSuggest,setShowSuggest]=useState(false);
+  const[suggestion,setSuggestion]=useState(null);
+  const[toast,setToast]=useState(null);
+  const[toastKey,setToastKey]=useState(0);
+  const searchRef=useRef(null);
+  const toastTimer=useRef(null);
+  const unsubRef=useRef(null);
 
-  const showToast = (msg) => {
-    setToast(msg); setToastKey(k=>k+1);
-    clearTimeout(toastTimer.current);
-    toastTimer.current = setTimeout(()=>setToast(null), 2400);
-  };
+  const showToast=msg=>{setToast(msg);setToastKey(k=>k+1);clearTimeout(toastTimer.current);toastTimer.current=setTimeout(()=>setToast(null),2400);};
 
   useEffect(()=>{
-    const h = e => { if(searchRef.current && !searchRef.current.contains(e.target)) setShowResults(false); };
-    document.addEventListener("mousedown", h);
-    return ()=>document.removeEventListener("mousedown", h);
+    const h=e=>{if(searchRef.current&&!searchRef.current.contains(e.target))setShowResults(false);};
+    document.addEventListener("mousedown",h);
+    return()=>document.removeEventListener("mousedown",h);
   },[]);
 
   useEffect(()=>{
-    const last = lsGet("cf_last");
+    const last=lsGet("cf_last");
     if(last?.code){
-      setRoomCode(last.code);
-      setRoomName(last.name||last.code);
-      startListening(last.code);
-      setScreen("app");
+      setRoomCode(last.code);setRoomName(last.name||last.code);
+      startListening(last.code);setScreen("app");
     }
   // eslint-disable-next-line
   },[]);
 
-  const startListening = (code) => {
-    if (unsubRef.current) unsubRef.current();
-    const listRef = ref(db, "lists/" + code);
-    unsubRef.current = onValue(listRef, (snap) => {
-      if (snap.exists()) {
-        const val = snap.val();
-        const notes = val.notes || DEFAULT_NOTES;
-        setListData({
-          film: val.film || [],
-          serie: val.serie || [],
-          musica: val.musica || [],
-          notes,
-          name: val.name || "",
-        });
+  const startListening=code=>{
+    if(unsubRef.current)unsubRef.current();
+    const listRef=ref(db,"lists/"+code);
+    unsubRef.current=onValue(listRef,snap=>{
+      if(snap.exists()){
+        const val=snap.val();
+        const notes=val.notes||DEFAULT_NOTES;
+        setListData({film:val.film||[],serie:val.serie||[],musica:val.musica||[],notes,name:val.name||""});
         setLocalNotes(notes);
       }
     });
   };
 
-  const enterRoom = async (code, isNew, name="") => {
-    if (isNew) {
-      await saveList(code, { film: [], serie: [], musica: [], notes: DEFAULT_NOTES, name });
-    } else {
-      const existing = await loadList(code);
-      if (existing === null) { setJoinErr("Codice non trovato."); return false; }
-      name = existing.name || code;
-    }
-    setRoomCode(code); setRoomName(name);
-    addRecent(code, name); setRecents(getRecents());
-    lsSet("cf_last", { code, name });
-    startListening(code);
-    setScreen("app");
-    return true;
+  const enterRoom=async(code,isNew,name="")=>{
+    if(isNew){await saveList(code,{film:[],serie:[],musica:[],notes:DEFAULT_NOTES,name});}
+    else{const ex=await loadList(code);if(ex===null){setJoinErr("Codice non trovato.");return false;}name=ex.name||code;}
+    setRoomCode(code);setRoomName(name);
+    addRecent(code,name);setRecents(getRecents());
+    lsSet("cf_last",{code,name});
+    startListening(code);setScreen("app");return true;
   };
 
-  const handleCreate = async () => {
-    if (!newName.trim()) { setJoinErr("Dai un nome alla lista!"); return; }
-    setCreating(true);
-    const code = genCode();
-    await enterRoom(code, true, newName.trim());
-    showToast("Lista creata! 🌿");
-    setCreating(false);
+  const handleCreate=async()=>{
+    if(!newName.trim()){setJoinErr("Dai un nome alla lista!");return;}
+    setCreating(true);const code=genCode();
+    await enterRoom(code,true,newName.trim());
+    showToast("Lista creata! 🌿");setCreating(false);
   };
 
-  const handleJoin = async () => {
-    const c = joinVal.trim().toUpperCase();
-    if (c.length < 4) { setJoinErr("Codice non valido."); return; }
-    setJoinErr("");
-    const ok = await enterRoom(c, false);
-    if (ok) showToast("Entrato! 🌿");
+  const handleJoin=async()=>{
+    const c=joinVal.trim().toUpperCase();
+    if(c.length<4){setJoinErr("Codice non valido.");return;}
+    setJoinErr("");const ok=await enterRoom(c,false);if(ok)showToast("Entrato! 🌿");
   };
 
-  const goHome = () => {
-    if (unsubRef.current) unsubRef.current();
-    setScreen("landing"); setRoomCode(""); setRoomName("");
-    setQuery(""); setResults([]); setShowResults(false);
-    setRecents(getRecents()); setShowNotes(false);
+  const goHome=()=>{
+    if(unsubRef.current)unsubRef.current();
+    setScreen("landing");setRoomCode("");setRoomName("");
+    setQuery("");setResults([]);setShowResults(false);
+    setRecents(getRecents());setShowNotes(false);setShowSuggest(false);
   };
 
-  const updateCategory = async (category, next) => {
-    const newData = { ...listData, [category]: next };
-    setListData(prev => ({ ...prev, [category]: next }));
-    await saveList(roomCode, newData);
+  const updateCategory=async(category,next)=>{
+    const newData={...listData,[category]:next};
+    setListData(prev=>({...prev,[category]:next}));
+    await saveList(roomCode,newData);
   };
 
-  const saveNotes = async () => {
-    const newData = { ...listData, notes: localNotes };
-    setListData(prev => ({ ...prev, notes: localNotes }));
-    await saveList(roomCode, newData);
+  const saveNotes=async()=>{
+    const newData={...listData,notes:localNotes};
+    setListData(prev=>({...prev,notes:localNotes}));
+    await saveList(roomCode,newData);
     showToast("Note salvate ✓");
   };
 
-  const handleSearch = async () => {
-    if (!query.trim()) return;
-    setSearching(true); setShowResults(true); setResults([]);
-    let r = [];
-    if (activeTab === "musica") r = await searchMusic(query.trim());
-    else r = await searchFilms(query.trim(), activeTab);
-    setResults(r); setSearching(false);
+  const copyCode=()=>{navigator.clipboard?.writeText(roomCode).catch(()=>{});showToast(`Codice copiato: ${roomCode} 📋`);};
+
+  const pickSuggestion=()=>{
+    const pool=[
+      ...(listData.film||[]).filter(f=>!f.watched).map(f=>({...f,_type:"film"})),
+      ...(listData.serie||[]).filter(f=>!f.watched).map(f=>({...f,_type:"serie"})),
+    ];
+    setSuggestion(pool.length===0?null:pool[Math.floor(Math.random()*pool.length)]);
+    setShowSuggest(true);
   };
 
-  const addItem = async (item) => {
-    const list = listData[activeTab] || [];
-    if (list.find(f=>f.id===item.id)) { showToast("Già in lista!"); return; }
-    await updateCategory(activeTab, [{...item, watched:false, addedAt:Date.now()}, ...list]);
-    setQuery(""); setResults([]); setShowResults(false);
+  const handleSearch=async()=>{
+    if(!query.trim())return;
+    setSearching(true);setShowResults(true);setResults([]);
+    let r=[];
+    if(activeTab==="musica")r=await searchMusic(query.trim());
+    else r=await searchFilms(query.trim(),activeTab);
+    setResults(r);setSearching(false);
+  };
+
+  const addItem=async item=>{
+    const list=listData[activeTab]||[];
+    if(list.find(f=>f.id===item.id)){showToast("Già in lista!");return;}
+    await updateCategory(activeTab,[{...item,watched:false,addedAt:Date.now()},...list]);
+    setQuery("");setResults([]);setShowResults(false);
     showToast(`"${item.title}" aggiunto ✓`);
   };
 
-  const toggleWatched = (id) => {
-    const list = listData[activeTab] || [];
-    updateCategory(activeTab, list.map(f=>f.id===id?{...f,watched:!f.watched}:f));
-  };
-  const removeItem = (id) => {
-    const list = listData[activeTab] || [];
-    updateCategory(activeTab, list.filter(f=>f.id!==id));
-  };
+  const toggleWatched=id=>{const list=listData[activeTab]||[];updateCategory(activeTab,list.map(f=>f.id===id?{...f,watched:!f.watched}:f));};
+  const removeItem=id=>{const list=listData[activeTab]||[];updateCategory(activeTab,list.filter(f=>f.id!==id));};
+  const updateNoteTab=(i,val)=>{const tabs=[...localNotes.tabs];tabs[i]=val;setLocalNotes(prev=>({...prev,tabs}));};
+  const updateNoteContent=(i,val)=>{const contents=[...localNotes.contents];contents[i]=val;setLocalNotes(prev=>({...prev,contents}));};
 
-  const copyCode = () => { navigator.clipboard?.writeText(roomCode).catch(()=>{}); showToast(`Codice copiato: ${roomCode} 📋`); };
+  const currentList=listData[activeTab]||[];
+  const toWatch=currentList.filter(f=>!f.watched);
+  const watched=currentList.filter(f=>f.watched);
+  const isMusic=activeTab==="musica";
+  const tabIcon={film:"🎬",serie:"📺",musica:"🎵"};
+  const watchedLabel={film:"Film visti",serie:"Viste",musica:"Condivisa"};
+  const toWatchLabel={film:"Da vedere",serie:"Da vedere",musica:"Da ascoltare"};
+  const searchPlaceholder={film:"Cerca un film…",serie:"Cerca una serie o anime…",musica:"Cerca artista o album…"};
 
-  const updateNoteTab = (i, val) => {
-    const tabs = [...localNotes.tabs]; tabs[i] = val;
-    setLocalNotes(prev => ({ ...prev, tabs }));
-  };
-  const updateNoteContent = (i, val) => {
-    const contents = [...localNotes.contents]; contents[i] = val;
-    setLocalNotes(prev => ({ ...prev, contents }));
-  };
-
-  const currentList = listData[activeTab] || [];
-  const toWatch = currentList.filter(f=>!f.watched);
-  const watched = currentList.filter(f=>f.watched);
-  const isMusic = activeTab === "musica";
-
-  const tabIcon = { film:"🎬", serie:"📺", musica:"🎵" };
-  const watchedLabel = { film:"Film visti", serie:"Viste", musica:"Condivisa" };
-  const toWatchLabel = { film:"Da vedere", serie:"Da vedere", musica:"Da ascoltare" };
-  const searchPlaceholder = { film:"Cerca un film…", serie:"Cerca una serie o anime…", musica:"Cerca artista o album…" };
-
-  if (screen === "landing") return (
+  if(screen==="landing")return(
     <>
       <style>{STYLE}</style>
       <div className="app">
@@ -415,32 +370,23 @@ export default function App() {
           <p className="landing-sub">Crea una lista, condividi il codice con un amico, e decidete cosa vedere stasera.</p>
           <div className="landing-box">
             <div className="landing-box-title">Crea nuova lista</div>
-            <input className="name-input" placeholder="Nome della lista (es. Film con Marco)"
-              value={newName} onChange={e=>{setNewName(e.target.value);setJoinErr("");}}
-              onKeyDown={e=>e.key==="Enter"&&handleCreate()}/>
-            <button className="create-btn" onClick={handleCreate} disabled={creating}>
-              {creating?<span className="loading-dots"><span/><span/><span/></span>:"🌿 Crea lista"}
-            </button>
+            <input className="name-input" placeholder="Nome della lista (es. Film con Marco)" value={newName} onChange={e=>{setNewName(e.target.value);setJoinErr("");}} onKeyDown={e=>e.key==="Enter"&&handleCreate()}/>
+            <button className="create-btn" onClick={handleCreate} disabled={creating}>{creating?<span className="loading-dots"><span/><span/><span/></span>:"🌿 Crea lista"}</button>
             <div className="divider">oppure entra con un codice</div>
             <div className="join-row">
-              <input className="join-input" placeholder="CODICE" value={joinVal}
-                onChange={e=>{setJoinVal(e.target.value);setJoinErr("");}}
-                onKeyDown={e=>e.key==="Enter"&&handleJoin()} maxLength={8}/>
+              <input className="join-input" placeholder="CODICE" value={joinVal} onChange={e=>{setJoinVal(e.target.value);setJoinErr("");}} onKeyDown={e=>e.key==="Enter"&&handleJoin()} maxLength={8}/>
               <button className="join-btn" onClick={handleJoin}>Entra →</button>
             </div>
-            {joinErr && <div className="error-msg">⚠ {joinErr}</div>}
+            {joinErr&&<div className="error-msg">⚠ {joinErr}</div>}
           </div>
-          {recents.length > 0 && (
+          {recents.length>0&&(
             <div className="recent-section">
               <div className="recent-title">Liste recenti</div>
               <div className="recent-list">
                 {recents.map(r=>(
-                  <div key={r.code} className="recent-item" onClick={()=>enterRoom(r.code, false)}>
+                  <div key={r.code} className="recent-item" onClick={()=>enterRoom(r.code,false)}>
                     <span className="recent-icon">🌿</span>
-                    <div>
-                      <div className="recent-name">{r.name}</div>
-                      <div className="recent-code">{r.code}</div>
-                    </div>
+                    <div><div className="recent-name">{r.name}</div><div className="recent-code">{r.code}</div></div>
                     <button className="recent-del" onClick={e=>{e.stopPropagation();removeRecent(r.code);setRecents(getRecents());}}>✕</button>
                   </div>
                 ))}
@@ -449,11 +395,11 @@ export default function App() {
           )}
         </div>
       </div>
-      {toast && <div key={toastKey} className="toast">{toast}</div>}
+      {toast&&<div key={toastKey} className="toast">{toast}</div>}
     </>
   );
 
-  return (
+  return(
     <>
       <style>{STYLE}</style>
       <div className="app">
@@ -461,6 +407,7 @@ export default function App() {
           <span className="header-leaf" onClick={goHome}>🌿</span>
           <div className="header-title">{roomName||"PocketList"}<span>lista condivisa</span></div>
           <div className="header-right">
+            <div className="notes-btn" onClick={pickSuggestion} title="Suggerimento">💡</div>
             <div className="notes-btn" onClick={()=>setShowNotes(true)} title="Note">📝</div>
             <div className="share-pill" onClick={copyCode}>
               <span className="share-pill-label">Codice</span>
@@ -476,37 +423,22 @@ export default function App() {
           <button className={`tab${activeTab==="musica"?" active":""}`} onClick={()=>{setActiveTab("musica");setQuery("");setResults([]);setShowResults(false);}}>🎵 Musica</button>
         </div>
 
-        <div className="sync-info">
-          <span className="sync-dot"/>
-          Sincronizzata in tempo reale · codice:&nbsp;<strong style={{color:"var(--forest)"}}>{roomCode}</strong>
-        </div>
+        <div className="sync-info"><span className="sync-dot"/>Sincronizzata in tempo reale · codice:&nbsp;<strong style={{color:"var(--forest)"}}>{roomCode}</strong></div>
 
         <div ref={searchRef}>
           <div className="search-wrap">
             <div className="search-row">
-              <input className="search-input" placeholder={searchPlaceholder[activeTab]}
-                value={query} onChange={e=>setQuery(e.target.value)}
-                onKeyDown={e=>e.key==="Enter"&&handleSearch()}
-                onFocus={()=>results.length&&setShowResults(true)}/>
-              <button className="search-btn" onClick={handleSearch} disabled={searching}>
-                {searching?<span className="loading-dots"><span/><span/><span/></span>:"Cerca"}
-              </button>
+              <input className="search-input" placeholder={searchPlaceholder[activeTab]} value={query} onChange={e=>setQuery(e.target.value)} onKeyDown={e=>e.key==="Enter"&&handleSearch()} onFocus={()=>results.length&&setShowResults(true)}/>
+              <button className="search-btn" onClick={handleSearch} disabled={searching}>{searching?<span className="loading-dots"><span/><span/><span/></span>:"Cerca"}</button>
             </div>
-            {showResults && (
+            {showResults&&(
               <div className="search-results">
-                {searching && <div className="no-results">Ricerca in corso…</div>}
-                {!searching && results.length===0 && <div className="no-results">Nessun risultato trovato.</div>}
-                {!searching && results.map(item=>(
+                {searching&&<div className="no-results">Ricerca in corso…</div>}
+                {!searching&&results.length===0&&<div className="no-results">Nessun risultato trovato.</div>}
+                {!searching&&results.map(item=>(
                   <div key={item.id} className="result-item" onClick={()=>addItem(item)}>
-                    {isMusic
-                      ? <MusicCover url={item.poster} size="sq"/>
-                      : item.poster
-                        ? <img src={item.poster} alt={item.title} className="result-poster-img"/>
-                        : <div className="result-poster-ph">📺</div>}
-                    <div>
-                      <div className="result-title">{item.title}</div>
-                      <div className="result-year">{item.original_title&&item.original_title!==item.title?`${item.original_title} · `:""}{item.year}</div>
-                    </div>
+                    {isMusic?<MusicCover url={item.poster} size="sq"/>:item.poster?<img src={item.poster} alt={item.title} className="result-poster-img"/>:<div className="result-poster-ph">📺</div>}
+                    <div><div className="result-title">{item.title}</div><div className="result-year">{item.original_title&&item.original_title!==item.title?`${item.original_title} · `:""}{item.year}</div></div>
                   </div>
                 ))}
               </div>
@@ -514,53 +446,50 @@ export default function App() {
           </div>
         </div>
 
-        <div className="section-label">
-          {tabIcon[activeTab]} {toWatchLabel[activeTab]} {toWatch.length>0&&<span className="count-badge">{toWatch.length}</span>}
-        </div>
-        {toWatch.length===0
-          ?<div className="empty">Cerca qualcosa per aggiungerlo alla lista…</div>
-          :<div className={isMusic?"grid-sq":"grid"}>{toWatch.map((f,i)=><Card key={f.id} film={f} index={i} isMusic={isMusic} tab={activeTab} onToggle={toggleWatched} onRemove={removeItem}/>)}</div>}
-
-        {watched.length>0&&(
-          <div className="watched-section">
-            <div className="section-label">{watchedLabel[activeTab]} 🙃 <span className="count-badge">{watched.length}</span></div>
-            <div className={isMusic?"grid-sq":"grid"}>{watched.map((f,i)=><Card key={f.id} film={f} index={i} isMusic={isMusic} tab={activeTab} onToggle={toggleWatched} onRemove={removeItem}/>)}</div>
-          </div>
-        )}
+        <div className="section-label">{tabIcon[activeTab]} {toWatchLabel[activeTab]} {toWatch.length>0&&<span className="count-badge">{toWatch.length}</span>}</div>
+        {toWatch.length===0?<div className="empty">Cerca qualcosa per aggiungerlo alla lista…</div>:<div className={isMusic?"grid-sq":"grid"}>{toWatch.map((f,i)=><Card key={f.id} film={f} index={i} isMusic={isMusic} tab={activeTab} onToggle={toggleWatched} onRemove={removeItem}/>)}</div>}
+        {watched.length>0&&(<div className="watched-section"><div className="section-label">{watchedLabel[activeTab]} 🙃 <span className="count-badge">{watched.length}</span></div><div className={isMusic?"grid-sq":"grid"}>{watched.map((f,i)=><Card key={f.id} film={f} index={i} isMusic={isMusic} tab={activeTab} onToggle={toggleWatched} onRemove={removeItem}/>)}</div></div>)}
       </div>
 
+      {/* SUGGERIMENTO POPUP */}
+      {showSuggest&&(
+        <div className="suggest-overlay" onClick={e=>e.target.className==="suggest-overlay"&&setShowSuggest(false)}>
+          <div className="suggest-popup">
+            <div className="suggest-header">
+              <span className="suggest-header-title">💡 Cosa guardiamo?</span>
+              <button className="suggest-close" onClick={()=>setShowSuggest(false)}>✕</button>
+            </div>
+            <div className="suggest-body">
+              {suggestion===null
+                ?<div className="suggest-empty">Nessun titolo da vedere nella lista!</div>
+                :<>
+                  <div className="suggest-type">{suggestion._type==="film"?"🎬 Film":"📺 Serie"}</div>
+                  {suggestion.poster
+                    ?<img src={suggestion.poster} alt={suggestion.title} className="suggest-poster"/>
+                    :<div className="suggest-poster-ph">{suggestion._type==="film"?"🎬":"📺"}</div>}
+                  <div className="suggest-title">{suggestion.title}</div>
+                  <div className="suggest-year">{suggestion.year}</div>
+                  <button className="suggest-again" onClick={pickSuggestion}>🔀 Altro</button>
+                </>
+              }
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* NOTES POPUP */}
-      {showNotes && (
+      {showNotes&&(
         <div className="notes-overlay" onClick={e=>e.target.className==="notes-overlay"&&setShowNotes(false)}>
           <div className="notes-popup">
-            <div className="notes-header">
-              <span className="notes-header-title">📝 Note condivise</span>
-              <button className="notes-close" onClick={()=>setShowNotes(false)}>✕</button>
-            </div>
+            <div className="notes-header"><span className="notes-header-title">📝 Note condivise</span><button className="notes-close" onClick={()=>setShowNotes(false)}>✕</button></div>
             <div className="notes-body">
               <div className="notes-tabs-vertical">
-                {localNotes.tabs.map((t,i)=>(
-                  <button key={i} className={`notes-tab-v${notesTab===i?" active":""}`} onClick={()=>setNotesTab(i)} title={t}>{t}</button>
-                ))}
+                {localNotes.tabs.map((t,i)=><button key={i} className={`notes-tab-v${notesTab===i?" active":""}`} onClick={()=>setNotesTab(i)} title={t}>{t}</button>)}
               </div>
               <div className="notes-content">
-                <div className="notes-tab-label-row">
-                  <input
-                    className="notes-tab-label-input"
-                    value={localNotes.tabs[notesTab]}
-                    onChange={e=>updateNoteTab(notesTab, e.target.value)}
-                    placeholder="Nome linguetta…"
-                  />
-                </div>
-                <textarea
-                  className="notes-textarea"
-                  value={localNotes.contents[notesTab]}
-                  onChange={e=>updateNoteContent(notesTab, e.target.value)}
-                  placeholder="Scrivi qui le tue note…"
-                />
-                <div className="notes-save-row">
-                  <button className="notes-save-btn" onClick={saveNotes}>Salva note</button>
-                </div>
+                <div className="notes-tab-label-row"><input className="notes-tab-label-input" value={localNotes.tabs[notesTab]} onChange={e=>updateNoteTab(notesTab,e.target.value)} placeholder="Nome linguetta…"/></div>
+                <textarea className="notes-textarea" value={localNotes.contents[notesTab]} onChange={e=>updateNoteContent(notesTab,e.target.value)} placeholder="Scrivi qui le tue note…"/>
+                <div className="notes-save-row"><button className="notes-save-btn" onClick={saveNotes}>Salva note</button></div>
               </div>
             </div>
           </div>
@@ -572,35 +501,17 @@ export default function App() {
   );
 }
 
-function MusicCover({ url, size }) {
-  const [err, setErr] = useState(false);
-  if (!url || err) return <div className={size==="sq"?"result-poster-ph-sq":"poster-ph-sq"}>🎵</div>;
-  return <img src={url} alt="" className={size==="sq"?"result-poster-sq":"card-poster-sq"} onError={()=>setErr(true)}/>;
-}
+function MusicCover({url,size}){const[err,setErr]=useState(false);if(!url||err)return<div className={size==="sq"?"result-poster-ph-sq":"poster-ph-sq"}>🎵</div>;return<img src={url} alt="" className={size==="sq"?"result-poster-sq":"card-poster-sq"} onError={()=>setErr(true)}/>;}
 
-function Card({film, index, isMusic, tab, onToggle, onRemove}) {
-  const [imgErr, setImgErr] = useState(false);
-  const emoji = { film:"🎬", serie:"📺", musica:"🎵" };
-  return (
+function Card({film,index,isMusic,tab,onToggle,onRemove}){
+  const[imgErr,setImgErr]=useState(false);
+  const emoji={film:"🎬",serie:"📺",musica:"🎵"};
+  return(
     <div className={`card${film.watched?" watched":""}`} style={{animationDelay:`${index*0.05}s`}}>
-      <div className={`card-check${film.watched?" on":""}`} onClick={()=>onToggle(film.id)}>
-        {film.watched&&<span className="checkmark">✓</span>}
-      </div>
+      <div className={`card-check${film.watched?" on":""}`} onClick={()=>onToggle(film.id)}>{film.watched&&<span className="checkmark">✓</span>}</div>
       <button className="card-del" onClick={()=>onRemove(film.id)}>✕</button>
-      {isMusic
-        ? film.poster&&!imgErr
-          ? <img src={film.poster} alt={film.title} className="card-poster-sq" onError={()=>setImgErr(true)}/>
-          : <div className="poster-ph-sq">🎵</div>
-        : film.poster&&!imgErr
-          ? <img src={film.poster} alt={film.title} className="card-poster" onError={()=>setImgErr(true)}/>
-          : <div className="poster-ph">{emoji[tab]}</div>}
-      <div className="card-info">
-        <div className="card-title">{film.title}</div>
-        <div className="card-year">{isMusic && film.original_title ? film.original_title : film.year}</div>
-      </div>
+      {isMusic?film.poster&&!imgErr?<img src={film.poster} alt={film.title} className="card-poster-sq" onError={()=>setImgErr(true)}/>:<div className="poster-ph-sq">🎵</div>:film.poster&&!imgErr?<img src={film.poster} alt={film.title} className="card-poster" onError={()=>setImgErr(true)}/>:<div className="poster-ph">{emoji[tab]}</div>}
+      <div className="card-info"><div className="card-title">{film.title}</div><div className="card-year">{isMusic&&film.original_title?film.original_title:film.year}</div></div>
     </div>
   );
 }
-
-
-
