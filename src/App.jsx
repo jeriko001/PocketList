@@ -118,7 +118,8 @@ const STYLE = `
   .tab.active{background:var(--forest);border-color:var(--forest);color:var(--beige);}
   .tab:hover:not(.active){border-color:var(--forest-light);color:var(--forest);}
 
-  .sync-info{display:flex;align-items:center;gap:6px;font-size:.72rem;color:var(--text-light);padding:7px 16px 0;flex-wrap:wrap;}
+  .list-name{text-align:center;font-family:'Playfair Display',serif;font-size:1rem;color:var(--forest);font-weight:600;padding:10px 16px 2px;letter-spacing:.03em;}
+  .sync-info{display:flex;align-items:center;gap:6px;font-size:.72rem;color:var(--text-light);padding:4px 16px 0;flex-wrap:wrap;}
   .sync-dot{width:6px;height:6px;border-radius:50%;background:var(--forest-light);animation:pulse 2.5s infinite;flex-shrink:0;}
   @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
 
@@ -405,7 +406,7 @@ export default function App(){
       <div className="app">
         <header>
           <span className="header-leaf" onClick={goHome}>🌿</span>
-          <div className="header-title">{roomName||"PocketList"}<span>lista condivisa</span></div>
+          <div className="header-title">PocketList</div>
           <div className="header-right">
             <div className="notes-btn" onClick={pickSuggestion} title="Suggerimento">💡</div>
             <div className="notes-btn" onClick={()=>setShowNotes(true)} title="Note">📝</div>
@@ -423,6 +424,7 @@ export default function App(){
           <button className={`tab${activeTab==="musica"?" active":""}`} onClick={()=>{setActiveTab("musica");setQuery("");setResults([]);setShowResults(false);}}>🎵 Musica</button>
         </div>
 
+        <div className="list-name">{roomName}</div>
         <div className="sync-info"><span className="sync-dot"/>Sincronizzata in tempo reale · codice:&nbsp;<strong style={{color:"var(--forest)"}}>{roomCode}</strong></div>
 
         <div ref={searchRef}>
