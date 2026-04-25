@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { initializeApp } from "firebase/app";
 import { getDatabase, ref, set, onValue, get } from "firebase/database";
+import { getAuth, signInAnonymously } from "firebase/auth";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCOeii2jYWPhUTACPEFsqQClXc-iQBQSLo",
@@ -14,6 +15,7 @@ const firebaseConfig = {
 
 const firebaseApp = initializeApp(firebaseConfig);
 const db = getDatabase(firebaseApp);
+const auth = getAuth(firebaseApp);
 
 const TMDB_KEY = "86c3283ad5a8c5b4f86ec7015813ccdc";
 const TMDB_BASE = "https://api.themoviedb.org/3";
@@ -249,6 +251,15 @@ export default function App(){
 
   const showToast=msg=>{setToast(msg);setToastKey(k=>k+1);clearTimeout(toastTimer.current);toastTimer.current=setTimeout(()=>setToast(null),2400);};
 
+useEffect(() => {
+  signInAnonymously(auth)
+    .then(() => console.log("Autenticato!"))
+    .catch((err) => console.error("Errore auth:", err));
+}, []);
+
+// Sotto iniziano i tuoi altri useEffect esistenti...
+
+  
   useEffect(()=>{
     const h=e=>{if(searchRef.current&&!searchRef.current.contains(e.target))setShowResults(false);};
     document.addEventListener("mousedown",h);
